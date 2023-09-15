@@ -11,17 +11,25 @@
 			<PatternLayout
 				pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L usedLayout: PatternLayout - %m%n" />
 		</Console>
+		<Console name="JsonObjectMessage" target="SYSTEM_OUT">
+			<JsonLayout complete="false" compact="false" objectMessageAsJsonObject="true">
+				<KeyValuePair key="usedLayout" value="JsonLayout_withObject" />
+			</JsonLayout>
+		</Console>
 
 	</Appenders>
 	<Loggers>
 	
-		<Logger name="org.gepardec.structured_logging.LoggingTest" additivity="false" level="trace">
-            <AppenderRef ref="ConsoleJSONAppender" />
+		<Logger name="org.gepardec.structured_logging.ObjectMessageTest" additivity="false" level="trace">
+            <AppenderRef ref="JsonObjectMessage" />
             <AppenderRef ref="console"  />
+        </Logger>
+		<Logger name="org.gepardec.structured_logging.LoggingTest" additivity="false" level="trace">
+            <AppenderRef ref="JsonObjectMessage" />
         </Logger>
 		
 		<Root level="info" additivity="false">
-			<appender-ref ref="ConsoleJSONAppender" />
+			<appender-ref ref="console" />
 		</Root>
 	</Loggers>
 </Configuration>

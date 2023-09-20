@@ -2,6 +2,7 @@ package org.gepardec.structured_logging;
 
 import jakarta.enterprise.context.Dependent;
 import org.apache.logging.log4j.ThreadContext;
+import org.apache.logging.log4j.message.ObjectMessage;
 
 import java.util.Map;
 
@@ -17,11 +18,11 @@ public class CalcLogObject {
     public CalcLogObject() {
 
     }
-//    public CalcLogObject(CalcRequest request, CalcResponse response, String method) {
-//        this.request = request;
-//        this.response = response;
-//        this.method = method;
-//    }
+    public CalcLogObject(CalcRequest request, CalcResponse response, String method) {
+        this.request = request;
+        this.response = response;
+        this.method = method;
+    }
 
     public CalcRequest getRequest() {
         return request;
@@ -47,11 +48,15 @@ public class CalcLogObject {
         this.method = method;
     }
 
-    public Map<String, String> getContext() {
-        return ThreadContext.getContext();
+    public Map<String, Object> getContext() {
+        return JTC.getContext();
     }
 
 //    public void setContext(String context) {
 ////        this.context = context;
 //    }
+
+    public static ObjectMessage of(CalcRequest request, CalcResponse response, String method){
+        return new ObjectMessage(new CalcLogObject(request, response, method));
+    }
 }

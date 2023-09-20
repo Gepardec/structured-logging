@@ -4,14 +4,11 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.ThreadContext;
-import org.apache.logging.log4j.message.ObjectMessage;
-import org.slf4j.MDC;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 @RequestScoped
-public class CalcService {
+public class CalcService2 {
     private static AtomicInteger instanceNo = new AtomicInteger(0);
 
     private final int iNo = instanceNo.incrementAndGet();
@@ -26,45 +23,45 @@ public class CalcService {
 //    @Inject
 //    private CalcLogObject logObject;
 
-    static Logger logger = LogManager.getLogger(CalcService.class);
+    static Logger logger = LogManager.getLogger(CalcService2.class);
+
+    @Inject
+    private LogSystem log; // LogSystem wird pro instanz erzeugt
 
     public CalcResponse calc(CalcRequest request) {
-        MyLogObj logObj = new MyLogObj();
+        MyLogObj logObj = log.tell(new MyLogObj()); // proxy the log object
 
-//        JTC.put("service", getClass().getName());
-        JTC.put(getClass().getName(),logObj);
+        logObj.setRequest(request);
+
+
+        Operation operation = request.getOperation();
+        int operand1 = request.getOperand1();
+        int operand2 = request.getOperand2();
 
         try {
-            logObj.setInstanceNo(iNo);
-            logObj.setRequest(request);
-//        logObject.setRequest(request);
-
-            Operation operation = request.getOperation();
-            int operand1 = request.getOperand1();
-            int operand2 = request.getOperand2();
-
             int result = getOperation(operation).performCalculation(operand1, operand2);
-
-            CalcResponse response = new CalcResponse(result);
-
-            logObj.setResponse(response);
-//        logObject.setResponse(response);
-
-            logger.info(CalcLogObject.of(request, response, "calc"));
-            return response;
-        }finally{
-            JTC.remove("service");
-            JTC.remove("logObj");
+        }catch(RuntimeException ex){
+            logObj.setError(ex);
         }
+
+        CalcResponse response = new CalcResponse(result);
+
+        logObj.setResponse(response);
+
+        return response;
     }
 
     private CalcOperation getOperation(Operation op) {
         return new SumOperation();
     }
 
+    @LogInfo
     public class MyLogObj {
+//        @LogInfo
         private CalcRequest request;
+//        @LogInfo
         private CalcResponse response;
+        @LogDebug
         private int instanceNo;
 
         public CalcRequest getRequest() {

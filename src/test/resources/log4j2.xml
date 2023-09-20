@@ -24,6 +24,10 @@
             <AppenderRef ref="JsonObjectMessage" />
             <AppenderRef ref="console"  />
         </Logger>
+		<Logger name="org.gepardec.structured_logging.CalcService" additivity="false" level="trace">
+            <AppenderRef ref="JsonObjectMessage" />
+            <AppenderRef ref="console"  />
+        </Logger>
 		<Logger name="org.gepardec.structured_logging.LoggingTest" additivity="false" level="trace">
             <AppenderRef ref="JsonObjectMessage" />
         </Logger>

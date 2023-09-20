@@ -4,7 +4,9 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.ThreadContext;
 import org.apache.logging.log4j.message.ObjectMessage;
+import org.slf4j.MDC;
 
 @RequestScoped
 public class CalcService {
@@ -17,6 +19,8 @@ public class CalcService {
     static Logger logger = LogManager.getLogger(CalcService.class);
 
     public CalcResponse calc(CalcRequest request) {
+        ThreadContext.put("service",toString());
+
 //        CalcLogObject logObject = new CalcLogObject();
         // logObject.setContext(context)
         logObject.setRequest(request);

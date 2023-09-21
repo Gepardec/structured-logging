@@ -17,6 +17,12 @@
     </properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>jakarta.enterprise</groupId>
+			<artifactId>jakarta.enterprise.cdi-api</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+
 		<!-- JSONB Implementation -->
 		<dependency>
 			<groupId>org.eclipse</groupId>

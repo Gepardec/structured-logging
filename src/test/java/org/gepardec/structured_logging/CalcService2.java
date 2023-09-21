@@ -43,6 +43,7 @@ public class CalcService2 {
         return response;
     }
 
+    @StructuredLogged
     public CalcResponse calcWithError(CalcRequest request) {
         CalcLogMessage logObj = log.tell(new CalcLogMessage()); // proxy the log object
 

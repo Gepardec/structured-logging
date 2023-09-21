@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @EnableAutoWeld
 @AddEnabledInterceptors(StrucuredLoggingInterceptor.class)
 @AddPackages(CalcService2Test.class)
+@AddPackages(LogSystem.class)
 @ActivateScopes(RequestScoped.class)
 class CalcService2Test {
 //    @WeldSetup

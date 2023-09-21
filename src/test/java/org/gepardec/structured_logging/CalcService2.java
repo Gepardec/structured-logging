@@ -4,6 +4,7 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.gepardec.structured_logging.level.LogWarn;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -20,8 +21,6 @@ public class CalcService2 {
     public String getName() {
         return "calculation service";
     }
-//    @Inject
-//    private CalcLogObject logObject;
 
     static Logger logger = LogManager.getLogger(CalcService2.class);
 
@@ -29,7 +28,7 @@ public class CalcService2 {
     private LogSystem log;
 
     public CalcResponse calc(CalcRequest request) {
-        MyLogObj logObj = log.tell(new MyLogObj()); // proxy the log object
+        CalcLogMessage logObj = log.tell(new CalcLogMessage()); // proxy the log object
 
         logObj.setRequest(request);
 
@@ -54,8 +53,8 @@ public class CalcService2 {
         return new SumOperation();
     }
 
-    //    @LogInfo
-    public class MyLogObj {
+    @LogWarn
+    public static class CalcLogMessage {
         //        @LogInfo
         private CalcRequest request;
         //        @LogInfo

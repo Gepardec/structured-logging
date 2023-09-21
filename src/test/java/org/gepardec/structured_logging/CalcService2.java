@@ -28,6 +28,7 @@ public class CalcService2 {
 //    @Inject
     private LogSystem log=new LogSystem(logger); // LogSystem wird pro instanz erzeugt
 
+    @StructuredLogged
     public CalcResponse calc(CalcRequest request) {
         MyLogObj logObj = log.tell(new MyLogObj()); // proxy the log object
 

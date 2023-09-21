@@ -1,9 +1,11 @@
 package org.gepardec.structured_logging;
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ObjectMessage;
+import org.gepardec.structured_logging.level.*;
 
-import java.time.LocalDateTime;
+import java.lang.annotation.Annotation;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -29,7 +31,36 @@ public class LogSystem {
             toFlush = new TreeSet<>(messages);
             messages.clear();
         }
-        toFlush.forEach(message -> delegate.info(new ObjectMessage(message)));
+        toFlush.forEach(message -> log(message));
+    }
+
+    private void log(TimedMessage message) {
+        Level logLevel = getLogLevel(message.getMessage());
+        delegate.log(logLevel, new ObjectMessage(message));
+    }
+
+    private Level getLogLevel(Object message) {
+        for (Annotation a : message.getClass().getDeclaredAnnotations()) {
+            if (a instanceof LogFatal) {
+                return Level.FATAL;
+            }
+            if (a instanceof LogError) {
+                return Level.ERROR;
+            }
+            if (a instanceof LogWarn) {
+                return Level.WARN;
+            }
+            if (a instanceof LogInfo) {
+                return Level.INFO;
+            }
+            if (a instanceof LogDebug) {
+                return Level.DEBUG;
+            }
+            if (a instanceof LogTrace) {
+                return Level.TRACE;
+            }
+        }
+        return Level.DEBUG;
     }
 
     private static class TimedMessage implements Comparable<TimedMessage> {

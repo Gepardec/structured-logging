@@ -3,6 +3,7 @@ package org.gepardec.slog;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.jboss.weld.junit5.auto.ActivateScopes;
+import org.jboss.weld.junit5.auto.AddEnabledInterceptors;
 import org.jboss.weld.junit5.auto.AddPackages;
 import org.jboss.weld.junit5.auto.EnableAutoWeld;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 @EnableAutoWeld
+@AddEnabledInterceptors(SLoggingInterceptor.class)
 @AddPackages(CalcServiceTest.class)
+@AddPackages(SLogger.class)
 @ActivateScopes(RequestScoped.class)
 class CalcServiceTest {
 //    @WeldSetup

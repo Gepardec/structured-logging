@@ -7,7 +7,6 @@ import org.apache.logging.log4j.message.ObjectMessage;
 import org.jboss.weld.junit5.EnableWeld;
 import org.junit.jupiter.api.Test;
 
-@EnableWeld
 class ObjectMessageTest {
 	
 	static Logger logger = LogManager.getLogger(ObjectMessageTest.class);

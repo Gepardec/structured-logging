@@ -25,8 +25,8 @@ public class CalcService2 {
 
     static Logger logger = LogManager.getLogger(CalcService2.class);
 
-    @Inject
-    private LogSystem log; // LogSystem wird pro instanz erzeugt
+//    @Inject
+    private LogSystem log=new LogSystem(logger); // LogSystem wird pro instanz erzeugt
 
     public CalcResponse calc(CalcRequest request) {
         MyLogObj logObj = log.tell(new MyLogObj()); // proxy the log object
@@ -40,28 +40,27 @@ public class CalcService2 {
 
         try {
             int result = getOperation(operation).performCalculation(operand1, operand2);
-        }catch(RuntimeException ex){
-            logObj.setError(ex);
+            CalcResponse response = new CalcResponse(result);
+            logObj.setResponse(response);
+            return response;
+//        }catch(RuntimeException ex){
+//            logObj.setError(ex);
+        }finally {
+            log.flush();
         }
-
-        CalcResponse response = new CalcResponse(result);
-
-        logObj.setResponse(response);
-
-        return response;
     }
 
     private CalcOperation getOperation(Operation op) {
         return new SumOperation();
     }
 
-    @LogInfo
+//    @LogInfo
     public class MyLogObj {
 //        @LogInfo
         private CalcRequest request;
 //        @LogInfo
         private CalcResponse response;
-        @LogDebug
+//        @LogDebug
         private int instanceNo;
 
         public CalcRequest getRequest() {

@@ -14,7 +14,6 @@
 		<Console name="JsonObjectMessage" target="SYSTEM_OUT">
 			<JsonLayout complete="false" compact="false" objectMessageAsJsonObject="true">
 				<KeyValuePair key="usedLayout" value="JsonLayout_withObject" />
-				<KeyValuePair key="threadContext" value="${ctx:service}" />
 			</JsonLayout>
 		</Console>
 
@@ -26,6 +25,10 @@
             <AppenderRef ref="console"  />
         </Logger>
 		<Logger name="org.gepardec.structured_logging.CalcService" additivity="false" level="trace">
+            <AppenderRef ref="JsonObjectMessage" />
+            <AppenderRef ref="console"  />
+        </Logger>
+		<Logger name="org.gepardec.structured_logging.CalcService2" additivity="false" level="trace">
             <AppenderRef ref="JsonObjectMessage" />
             <AppenderRef ref="console"  />
         </Logger>

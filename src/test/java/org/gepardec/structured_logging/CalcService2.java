@@ -33,21 +33,23 @@ public class CalcService2 {
 
         logObj.setRequest(request);
 
-
         Operation operation = request.getOperation();
         int operand1 = request.getOperand1();
         int operand2 = request.getOperand2();
 
-        try {
-            int result = getOperation(operation).performCalculation(operand1, operand2);
-            CalcResponse response = new CalcResponse(result);
-            logObj.setResponse(response);
-            return response;
-//        }catch(RuntimeException ex){
-//            logObj.setError(ex);
-        } finally {
-            log.flush();
-        }
+        int result = getOperation(operation).performCalculation(operand1, operand2);
+        CalcResponse response = new CalcResponse(result);
+        logObj.setResponse(response);
+        return response;
+    }
+
+    public CalcResponse calcWithError(CalcRequest request) {
+        CalcLogMessage logObj = log.tell(new CalcLogMessage()); // proxy the log object
+
+        logObj.setRequest(request);
+
+        log.tell(new RuntimeException("very serious error"));
+        return new CalcResponse(-1);
     }
 
     private CalcOperation getOperation(Operation op) {

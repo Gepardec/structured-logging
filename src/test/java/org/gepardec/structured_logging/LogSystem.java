@@ -40,6 +40,9 @@ public class LogSystem {
     }
 
     private Level getLogLevel(Object message) {
+        if(message instanceof Throwable) {
+            return Level.ERROR;
+        }
         for (Annotation a : message.getClass().getDeclaredAnnotations()) {
             if (a instanceof LogFatal) {
                 return Level.FATAL;

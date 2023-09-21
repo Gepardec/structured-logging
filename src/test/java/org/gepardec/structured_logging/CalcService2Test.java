@@ -39,4 +39,14 @@ class CalcService2Test {
         assertNotNull(response);
         assertEquals(15, response.getResult());
     }
+
+    @Test
+    void testSum_failure() {
+        // given
+
+        // when
+        CalcResponse response = service.calcWithError(new CalcRequest(10, 5, Operation.SUM));
+
+        // then
+    }
 }

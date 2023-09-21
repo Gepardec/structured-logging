@@ -20,19 +20,19 @@
 	</Appenders>
 	<Loggers>
 	
-		<Logger name="org.gepardec.slog4j.ObjectMessageTest" additivity="false" level="trace">
+		<Logger name="org.gepardec.slog.ObjectMessageTest" additivity="false" level="trace">
             <AppenderRef ref="JsonObjectMessage" />
             <AppenderRef ref="console"  />
         </Logger>
-		<Logger name="org.gepardec.slog4j.CalcService" additivity="false" level="trace">
+		<Logger name="org.gepardec.slog.CalcService" additivity="false" level="trace">
             <AppenderRef ref="JsonObjectMessage" />
             <AppenderRef ref="console"  />
         </Logger>
-		<Logger name="org.gepardec.slog4j.CalcService2" additivity="false" level="trace">
+		<Logger name="org.gepardec.slog.CalcService2" additivity="false" level="trace">
             <AppenderRef ref="JsonObjectMessage" />
             <AppenderRef ref="console"  />
         </Logger>
-		<Logger name="org.gepardec.slog4j.LoggingTest" additivity="false" level="trace">
+		<Logger name="org.gepardec.slog.LoggingTest" additivity="false" level="trace">
             <AppenderRef ref="JsonObjectMessage" />
         </Logger>
 		

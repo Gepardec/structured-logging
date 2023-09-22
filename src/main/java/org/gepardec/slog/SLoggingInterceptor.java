@@ -15,7 +15,6 @@ public class SLoggingInterceptor {
 
     @AroundInvoke
     public Object log(InvocationContext invocationContext) throws Exception {
-        System.out.println("Interceptor begin");
 
         Object result = invocationContext.proceed();
         Object target = invocationContext.getTarget();

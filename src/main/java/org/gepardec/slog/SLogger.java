@@ -91,4 +91,8 @@ public class SLogger {
             return result;
         }
     }
+
+    public void info(String string) {
+        delegate.info(string);
+    }
 }

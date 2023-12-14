@@ -26,4 +26,9 @@ public class SLoggerProducer {
 
         return new SLogger(LogManager.getLogger(targetType));
     }
+    
+    public SLogger produceLogSystem(Class clazz) {
+        return new SLogger(LogManager.getLogger(clazz));
+    }
+
 }
